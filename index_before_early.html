@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NEXUS LAUNCHER — собственный Minecraft-лаунчер: запуск сборок, моды с Modrinth и CurseForge, серверы, скины и буст FPS.">
+  <title>NEXUS LAUNCHER — скачать лаунчер Minecraft</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="glow glow-a" aria-hidden="true"></div>
+  <div class="glow glow-b" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="На главную">
+      <span class="brand-mark">NX</span>
+      <span class="brand-text">NEXUS<span>LAUNCHER</span></span>
+    </a>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Открыть меню" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="nav" id="nav" aria-label="Основная навигация">
+      <a href="#home">Главная</a>
+      <a href="#features">Возможности</a>
+      <a href="#install">Как установить</a>
+      <a href="#faq">Вопросы</a>
+      <a href="#download">Скачать</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <div class="eyebrow"><span class="pulse"></span> WINDOWS · MINECRAFT JAVA EDITION</div>
+        <h1>NEXUS<br><span>LAUNCHER</span></h1>
+        <p class="lead">Свой лаунчер для Minecraft: выбирайте ядро и версию, ставьте моды, подключайтесь к серверам, синхронизируйте скины и ускоряйте игру одним нажатием.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" id="downloadHero" href="NEXUS%20LAUNCHER.zip" target="_blank" rel="noopener">Скачать лаунчер</a>
+          <a class="btn btn-ghost" href="https://github.com/kirillnikolajzen834-prog/nexus-launcher1" target="_blank" rel="noopener">Исходный код на GitHub</a>
+        </div>
+        <div class="badges">
+          <span class="badge">Fabric</span>
+          <span class="badge">NeoForge</span>
+          <span class="badge">Forge</span>
+          <span class="badge">Quilt</span>
+          <span class="badge">Vanilla</span>
+        </div>
+      </div>
+
+      <div class="hero-panel" aria-label="Краткая статистика лаунчера">
+        <div class="panel-head">
+          <span class="panel-dot"></span>
+          <span>LAUNCHER STATUS</span>
+          <span class="panel-online">READY</span>
+        </div>
+        <div class="stats">
+          <div class="stat"><strong>5</strong><span>ядер Minecraft</span></div>
+          <div class="stat"><strong>2</strong><span>источника модов</span></div>
+          <div class="stat"><strong>9</strong><span>модов в бусте FPS</span></div>
+          <div class="stat"><strong>3</strong><span>темы интерфейса</span></div>
+        </div>
+        <div class="scanline" aria-hidden="true"></div>
+        <div class="panel-foot">
+          <span>LAUNCHER CORE</span>
+          <span class="bar"><i></i></span>
+          <span>ONLINE</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="section-head">
+        <span class="kicker">// 01</span>
+        <h2>Что умеет NEXUS LAUNCHER</h2>
+        <p>Всё необходимое для игры и сборки модов — в одном окне.</p>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <div class="card-icon">01</div>
+          <h3>Запуск Minecraft</h3>
+          <p>Введите ник, выберите версию и ядро. Лаунчер скачает недостающие файлы и запустит игру с модами или без них.</p>
+        </article>
+        <article class="card">
+          <div class="card-icon">02</div>
+          <h3>Мод-браузер</h3>
+          <p>Поиск модов на Modrinth и CurseForge, установка прямо в папку mods выбранной сборки, фильтр по версии и поддержка зависимостей.</p>
+        </article>
+        <article class="card">
+          <div class="card-icon">03</div>
+          <h3>Буст FPS</h3>
+          <p>Готовый пакет оптимизации: Sodium, Lithium, FerriteCore, EntityCulling, ImmediatelyFast, Clumps и другие моды для выбранного ядра.</p>
+        </article>
+        <article class="card">
+          <div class="card-icon">04</div>
+          <h3>Серверы и пинг</h3>
+          <p>Добавляйте серверы по IP, проверяйте их доступность и подключайтесь к нужному прямо из лаунчера.</p>
+        </article>
+        <article class="card">
+          <div class="card-icon">05</div>
+          <h3>Скины через Ely.by</h3>
+          <p>Включите синхронизацию по нику — лаунчер подтянет скин через authlib-injector при запуске игры.</p>
+        </article>
+        <article class="card">
+          <div class="card-icon">06</div>
+          <h3>Настройки под себя</h3>
+          <p>Выделение ОЗУ, три цветовые темы, CurseForge API-ключ и собственная папка Minecraft — всё сохраняется между запусками.</p>
+        </article>
+        <article class="card">
+          <div class="card-icon">07</div>
+          <h3>Мои моды</h3>
+          <p>Отдельная вкладка с модами автора лаунчера: Rick Prime Nanobots и Rick's Stuff. Установка одной кнопкой, зависимости подтягиваются автоматически.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="install">
+      <div class="section-head">
+        <span class="kicker">// 02</span>
+        <h2>Как установить</h2>
+        <p>Займёт пару минут. Лаунчер portable — установщик не требуется.</p>
+      </div>
+
+      <div class="install-wrap">
+        <ol class="steps">
+          <li><span>1</span><div><h3>Скачайте архив</h3><p>Нажмите кнопку скачивания и получите <code>NEXUS LAUNCHER.zip</code>.</p></div></li>
+          <li><span>2</span><div><h3>Распакуйте в папку</h3><p>Лучше без кириллицы в пути, например <code>C:\Games\NexusLauncher</code>.</p></div></li>
+          <li><span>3</span><div><h3>Запустите NEXUS LAUNCHER.exe</h3><p>При первом старте лаунчер подготовит папки для версий, модов и профилей. Вкладка «Мои моды» сразу доступна всем пользователям.</p></div></li>
+          <li><span>4</span><div><h3>Выберите сборку и играйте</h3><p>Укажите ник, ядро и версию Minecraft, затем нажмите «Запустить Minecraft».</p></div></li>
+        </ol>
+
+        <aside class="warn">
+          <h3>Требования</h3>
+          <p>Windows 10/11, интернет для загрузки игры и модов. Для актуальных версий Minecraft нужна Java 21 — лаунчер подскажет, если версия не подходит.</p>
+          <div class="warn-line"></div>
+          <p>Для раздела CurseForge нужен бесплатный API-ключ. Для Modrinth ключ не требуется.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="section-head">
+        <span class="kicker">// 03</span>
+        <h2>Частые вопросы</h2>
+        <p>Коротко о главном перед запуском.</p>
+      </div>
+
+      <div class="faq">
+        <details open>
+          <summary>Это официальный лаунчер Minecraft?</summary>
+          <p>Нет. Это независимый лаунчер автора проекта для запуска Java-версии Minecraft и управления сборками.</p>
+        </details>
+        <details>
+          <summary>Какие версии Minecraft поддерживаются?</summary>
+          <p>Лаунчер работает с популярными версиями через Fabric, NeoForge, Forge, Quilt и ваниль: 1.21.10, 1.21.9, 1.21.4, 1.21.1, 1.20.6, 1.20.4, 1.20.1 и 1.12.2.</p>
+        </details>
+        <details>
+          <summary>Можно ли играть без модов?</summary>
+          <p>Да. Кнопка «Запустить без модов» запускает выбранную сборку без установленных модов.</p>
+        </details>
+        <details>
+          <summary>Куда ставятся моды?</summary>
+          <p>В папку <code>mods</code> профиля выбранной связки «версия / ядро». Открыть её можно кнопкой «Папка mods» прямо в лаунчере.</p>
+        </details>
+        <details>
+          <summary>Как установить ваши моды?</summary>
+          <p>Откройте вкладку «Мои моды» и нажмите «Установить» рядом с нужным модом. Rick Prime Nanobots 3.4.1 Requires Rick's Stuff, поэтому зависимость поставится вместе с ним.</p>
+        </details>
+        <details>
+          <summary>Где исходный код?</summary>
+          <p>Репозиторий открыт: <a href="https://github.com/kirillnikolajzen834-prog/nexus-launcher1" target="_blank" rel="noopener">github.com/kirillnikolajzen834-prog/nexus-launcher1</a>.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="section section-alt download" id="download">
+      <div class="download-card">
+        <span class="kicker">// 04</span>
+        <h2>Готовы запустить?</h2>
+        <p>Скачайте архив, распакуйте и запустите NEXUS LAUNCHER. Сборка уже включает вкладку «Мои моды» с авторскими модами и автоустановкой зависимостей.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="NEXUS%20LAUNCHER.zip" target="_blank" rel="noopener">Скачать NEXUS LAUNCHER.zip</a>
+          <a class="btn btn-ghost" href="https://github.com/kirillnikolajzen834-prog/nexus-launcher1/releases/tag/nexus-launcher" target="_blank" rel="noopener">Открыть релиз</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-brand">NEXUS<span>LAUNCHER</span></div>
+    <p>Minecraft Java Edition · Windows · Fabric / NeoForge / Forge / Quilt / Vanilla</p>
+    <p class="footer-note">Сайт подготовил Джарвис на основе исходного кода лаунчера и публичного релиза на GitHub.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

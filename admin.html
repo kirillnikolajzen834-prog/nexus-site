@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXUS LAUNCHER — выдача ключей</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body { padding: 40px 6vw; }
+    .admin-wrap { max-width: 760px; margin: 0 auto; }
+    .admin-card { border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); padding: 28px; }
+    .admin-card input { width: 100%; height: 46px; margin: 14px 0; padding: 0 14px; border-radius: 10px; border: 1px solid var(--line); background: rgba(0,0,0,.28); color: var(--text); font-family: Consolas, monospace; }
+    .admin-card textarea { width: 100%; min-height: 150px; padding: 14px; border-radius: 10px; border: 1px solid var(--line); background: rgba(0,0,0,.28); color: var(--accent); font-family: Consolas, monospace; font-size: 12px; }
+    .admin-msg { min-height: 22px; color: var(--muted); font-size: 13px; }
+    .admin-msg.ok { color: var(--accent); }
+    .admin-msg.bad { color: #ff6b6b; }
+    code { user-select: all; }
+  </style>
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+  <main class="admin-wrap">
+    <div class="section-head">
+      <span class="kicker">// NEXUS ADMIN</span>
+      <h2>Выдача ключей раннего доступа</h2>
+      <p>Введите мастер-ключ, сгенерируйте ключ друга и добавьте показанную строку в <code>EARLY_KEYS</code> в <code>script.js</code>.</p>
+    </div>
+
+    <div class="admin-card" id="adminLogin">
+      <h3>Мастер-ключ</h3>
+      <input id="masterKey" type="password" placeholder="NEXUS-MASTER-..." autocomplete="off" spellcheck="false">
+      <button class="btn btn-primary" id="masterBtn" type="button">Войти</button>
+      <p class="admin-msg" id="adminMsg"></p>
+    </div>
+
+    <div class="admin-card is-hidden" id="adminPanel">
+      <h3>Новый ключ</h3>
+      <p>Номер слота определяет надпись «EARLY ACCESS #N» на сайте.</p>
+      <input id="slotInput" type="number" min="1" max="99" value="3">
+      <button class="btn btn-primary" id="genBtn" type="button">Сгенерировать</button>
+      <p class="admin-msg ok" id="genMsg"></p>
+      <textarea id="jsOutput" readonly></textarea>
+      <p><button class="btn btn-ghost" id="copyBtn" type="button">Скопировать строку</button></p>
+    </div>
+  </main>
+
+  <script>
+    const MASTER_SHA = 'a0b7e74f5be53a20d6c242e78fce7149fddf60ee58d815f0748da1f667610fbd';
+    const MASTER_FAST = '4a0402d0';
+    const masterKey = document.getElementById('masterKey');
+    const masterBtn = document.getElementById('masterBtn');
+    const adminMsg = document.getElementById('adminMsg');
+    const adminLogin = document.getElementById('adminLogin');
+    const adminPanel = document.getElementById('adminPanel');
+    const slotInput = document.getElementById('slotInput');
+    const genBtn = document.getElementById('genBtn');
+    const genMsg = document.getElementById('genMsg');
+    const jsOutput = document.getElementById('jsOutput');
+    const copyBtn = document.getElementById('copyBtn');
+
+    function fastHash(value) {
+      let h1 = 0x811c9dc5 >>> 0;
+      let h2 = 0x01000193 >>> 0;
+      for (let i = 0; i < value.length; i++) {
+        const c = value.charCodeAt(i);
+        h1 = Math.imul(h1 ^ c, 0x01000193) >>> 0;
+        h2 = (Math.imul(h2 + c, 0x85ebca6b) ^ (h2 >>> 13)) >>> 0;
+      }
+      h1 = (h1 ^ ((h2 + ((h1 << 1) >>> 0)) >>> 0)) >>> 0;
+      h1 = Math.imul(h1 ^ (h1 >>> 16), 0x7feb352d) >>> 0;
+      h1 = Math.imul(h1 ^ (h1 >>> 15), 0x846ca68b) >>> 0;
+      h1 = (h1 ^ (h1 >>> 16)) >>> 0;
+      return h1.toString(16).padStart(8, '0');
+    }
+
+    async function keyHashes(value) {
+      let sha = '';
+      if (window.crypto && window.crypto.subtle && window.TextEncoder) {
+        try {
+          const buffer = await window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(value));
+          sha = Array.from(new Uint8Array(buffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+        } catch (error) {}
+      }
+      return { sha, fast: fastHash(value) };
+    }
+
+    function say(el, text, cls) {
+      el.textContent = text;
+      el.className = 'admin-msg ' + (cls || '');
+    }
+
+    masterBtn.addEventListener('click', async () => {
+      const key = masterKey.value.trim().toUpperCase();
+      const hashes = await keyHashes(key);
+      if (hashes.sha === MASTER_SHA || hashes.fast === MASTER_FAST) {
+        adminLogin.classList.add('is-hidden');
+        adminPanel.classList.remove('is-hidden');
+        say(adminMsg, '', '');
+      } else {
+        say(adminMsg, 'Неверный мастер-ключ.', 'bad');
+      }
+    });
+
+    genBtn.addEventListener('click', async () => {
+      const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      let suffix = '';
+      for (let i = 0; i < 8; i++) {
+        const bytes = new Uint32Array(1);
+        window.crypto.getRandomValues(bytes);
+        suffix += alphabet[bytes[0] % alphabet.length];
+      }
+      const slot = Math.max(1, Math.min(99, parseInt(slotInput.value, 10) || 3));
+      const key = 'NEXUS-EARLY-' + slot + '-' + suffix;
+      const hashes = await keyHashes(key);
+      const sha = hashes.sha || '';
+      const fast = hashes.fast;
+      const label = 'EARLY ACCESS #' + slot;
+      const title = slot === 1 ? 'Вы — самый первый тестировщик' : 'Ранний доступ активен';
+      jsOutput.value = "  '" + key + "': {\n" +
+        "    sha: '" + sha + "',\n" +
+        "    fast: '" + fast + "',\n" +
+        "    slot: " + slot + ",\n" +
+        "    label: '" + label + "',\n" +
+        "    title: '" + title + "',\n" +
+        "    features: COMMON_FEATURES\n" +
+        "  },";
+      say(genMsg, 'Ключ создан: ' + key, 'ok');
+    });
+
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(jsOutput.value);
+        say(genMsg, 'Скопировано. Вставьте строку в EARLY_KEYS в script.js.', 'ok');
+      } catch (error) {
+        jsOutput.select();
+        say(genMsg, 'Выделите текст и скопируйте вручную.', 'bad');
+      }
+    });
+  </script>
+</body>
+</html>
+
